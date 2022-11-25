@@ -7,9 +7,9 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtWebEngineWidgets import *
 
 # Vars
-useMoreSearchEngines = True
-moreEngineRawDataAddress = 'https://raw.githubusercontent.com/Parsa-GP/api/gh-pages/SE_iran.json'
-defaultSearchEngine = 'Google'
+useMoreEng = True
+moreSEurl = 'https://raw.githubusercontent.com/Parsa-GP/api/gh-pages/SE_iran.json'
+defSE = 'Google'
 
 # Functions
 def mergeDict(dict1, dict2):
@@ -19,12 +19,11 @@ def mergeDict(dict1, dict2):
 # Set default vars
 seData = requests.get("https://raw.githubusercontent.com/Parsa-GP/api/gh-pages/search_engines.json")
 searchEngine = seData.json()
-if useMoreSearchEngines == True:
-    aseData = requests.get(moreEngineRawDataAddress)
+if useMoreEng == True:
+    aseData = requests.get(moreSEurl)
     altSearchEngine = aseData.json()
     searchEngines = mergeDict(searchEngine, altSearchEngine)
-
-defaultSE = defaultSearchEngine
+defaultSE = defSE
 homePage = searchEngines[defaultSE][0]
 searchArgs = searchEngines[defaultSE][1]
 
@@ -74,7 +73,6 @@ class MainWindow(QMainWindow):
         self.browser.urlChanged.connect(self.update_url)
         self.browser.loadFinished.connect(self.finished_url)
 
-    # Functions
     def onCookieAdded(self, cookie):
         for c in self.cookies:
             if c.hasSameIdentifier(cookie):
@@ -104,7 +102,7 @@ class MainWindow(QMainWindow):
 
     def navigate_to_url(self):
         url = self.url_bar.text()
-        if url[0:7] == 'http://' or url[0:8] == 'https://' or url[0:6] == 'about:':
+        if url[0:7]=='http://' or url[0:8]=='https://' or url[0:6]=='about:':
             self.url_bar.setText(url)
             self.browser.setUrl(QUrl(url))
         else:
@@ -118,10 +116,9 @@ class MainWindow(QMainWindow):
 
     def finished_url(self, q):
         title = self.browser.page().title()
-        self.setWindowTitle(f'{title} - Browser')\
+        self.setWindowTitle(f'{title} - Butter')\
         
-# Run the app
 app = QApplication(sys.argv)
-QApplication.setApplicationName('Browser')
+QApplication.setApplicationName('Butter')
 window = MainWindow()
 app.exec_()
