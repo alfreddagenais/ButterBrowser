@@ -7,12 +7,16 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtWebEngineWidgets import *
 
 # Set dafault vars
-'''searchEngines = {'Google':['http://google.com/?hl=en', 'https://www.google.com/search?q=']}'''
-seData = requests.get("https://raw.githubusercontent.com/Parsa-GP/api/gh-pages/search_engines.json")
-searchEngines = seData.json()
+#'''searchEngines = {'Google':['http://google.com/?hl=en', 'https://www.google.com/search?q=']}'''
+#seData = requests.get("https://raw.githubusercontent.com/Parsa-GP/api/gh-pages/search_engines.json")
+#searchEngines = seData.json()
 defaultSE = 'Google'
-homePage = searchEngines[defaultSE][0]
-searchArgs = searchEngines[defaultSE][1]
+# homePage = searchEngines[defaultSE][0]
+#searchArgs = searchEngines[defaultSE][1]
+
+
+homePage = 'https://jesuisun.dev'
+searchArgs = 'https://www.google.com/search?q='
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -47,20 +51,20 @@ class MainWindow(QMainWindow):
         self.url_bar.returnPressed.connect(self.navigate_to_url)
         navbar.addWidget(self.url_bar)
 
-        self.cb = QComboBox()
-        self.cb.addItems(searchEngines)
-        self.cb.currentIndexChanged.connect(self.selectionchange)
-        navbar.addWidget(self.cb)
+        #self.cb = QComboBox()
+        #self.cb.addItems(searchEngines)
+        #self.cb.currentIndexChanged.connect(self.selectionchange)
+        #navbar.addWidget(self.cb)
 
         self.browser.urlChanged.connect(self.update_url)
         self.browser.loadFinished.connect(self.finished_url)
 
     # Functions
-    def selectionchange(self,i):
-        global homePage
-        global searchArgs
-        homePage = searchEngines[self.cb.currentText()][0]
-        searchArgs = searchEngines[self.cb.currentText()][1]
+    #def selectionchange(self,i):
+        #global homePage
+        #global searchArgs
+        #homePage = searchEngines[self.cb.currentText()][0]
+        #searchArgs = searchEngines[self.cb.currentText()][1]
 
 
     def navigate_home(self):
